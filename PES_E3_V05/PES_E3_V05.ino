@@ -23,6 +23,9 @@ const int pinSensor2 = 33;
 MPU6050 mpu;
 const int buzzer = 15;
 
+#define stepPin 18
+#define dirPin 19
+
 BLEServer* pServer = NULL;
 BLECharacteristic* pSensorCharacteristic = NULL;
 BLECharacteristic* pLedCharacteristic = NULL;
@@ -64,43 +67,6 @@ class MyServerCallbacks : public BLEServerCallbacks {
     Serial.println("Device disconnected");
   }
 };
-
-void drawGraph() {
-  tft.fillRect(graphX, graphY, graphWidth, graphHeight, TFT_BLACK);  // Wis de oude grafiek
-  tft.drawRect(graphX, graphY, graphWidth, graphHeight, TFT_WHITE);  // Teken de grafiekrand
-
-  if (dataIndex > 1) {
-    // Bepaal de maximale waarden voor x en y
-    float maxX = 0;
-    float maxY = 0;
-    for (int i = 0; i < dataIndex; i++) {
-      if (dataPointsX[i] > maxX) maxX = dataPointsX[i];
-      if (dataPointsY[i] > maxY) maxY = dataPointsY[i];
-    }
-
-    // Schaal factoren
-    float scaleX = graphWidth / maxX;
-    float scaleY = graphHeight / maxY;
-
-    Serial.println("GRAPH BEGINT");
-    for (int i = 1; i < dataIndex; i++) {
-      // Schaal de x- en y-waarden naar de grafiekgrootte
-      int x1 = graphX + (int)(dataPointsX[i - 1] * scaleX);
-      int y1 = graphY + graphHeight - (int)(dataPointsY[i - 1] * scaleY);
-      int x2 = graphX + (int)(dataPointsX[i] * scaleX);
-      int y2 = graphY + graphHeight - (int)(dataPointsY[i] * scaleY);
-
-      // Zorg ervoor dat de lijnen binnen de grafiek blijven
-      x1 = constrain(x1, graphX, graphX + graphWidth);
-      y1 = constrain(y1, graphY, graphY + graphHeight);
-      x2 = constrain(x2, graphX, graphX + graphWidth);
-      y2 = constrain(y2, graphY, graphY + graphHeight);
-
-      Serial.println((String)x1 + " " + (String)y1 + " " + (String)x2 + " " + (String)y2);
-      tft.drawLine(x1, y1, x2, y2, TFT_GREEN);
-    }
-  }
-}
 
 class MyCharacteristicCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic* pLedCharacteristic) {
@@ -423,3 +389,42 @@ String updateTilt(){
   String result = String(pitch, 2);
   return result;
 }
+
+/*
+void drawGraph() {
+  tft.fillRect(graphX, graphY, graphWidth, graphHeight, TFT_BLACK);  // Wis de oude grafiek
+  tft.drawRect(graphX, graphY, graphWidth, graphHeight, TFT_WHITE);  // Teken de grafiekrand
+
+  if (dataIndex > 1) {
+    // Bepaal de maximale waarden voor x en y
+    float maxX = 0;
+    float maxY = 0;
+    for (int i = 0; i < dataIndex; i++) {
+      if (dataPointsX[i] > maxX) maxX = dataPointsX[i];
+      if (dataPointsY[i] > maxY) maxY = dataPointsY[i];
+    }
+
+    // Schaal factoren
+    float scaleX = graphWidth / maxX;
+    float scaleY = graphHeight / maxY;
+
+    Serial.println("GRAPH BEGINT");
+    for (int i = 1; i < dataIndex; i++) {
+      // Schaal de x- en y-waarden naar de grafiekgrootte
+      int x1 = graphX + (int)(dataPointsX[i - 1] * scaleX);
+      int y1 = graphY + graphHeight - (int)(dataPointsY[i - 1] * scaleY);
+      int x2 = graphX + (int)(dataPointsX[i] * scaleX);
+      int y2 = graphY + graphHeight - (int)(dataPointsY[i] * scaleY);
+
+      // Zorg ervoor dat de lijnen binnen de grafiek blijven
+      x1 = constrain(x1, graphX, graphX + graphWidth);
+      y1 = constrain(y1, graphY, graphY + graphHeight);
+      x2 = constrain(x2, graphX, graphX + graphWidth);
+      y2 = constrain(y2, graphY, graphY + graphHeight);
+
+      Serial.println((String)x1 + " " + (String)y1 + " " + (String)x2 + " " + (String)y2);
+      tft.drawLine(x1, y1, x2, y2, TFT_GREEN);
+    }
+  }
+}
+*/
