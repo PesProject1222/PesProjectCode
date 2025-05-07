@@ -13,7 +13,7 @@ const int stepsPerR = 200;
 
 
 
-#define LED_PIN 13
+#define LED_PIN 27
 #define NUM_LEDS 12
 CRGB leds[NUM_LEDS];
 
