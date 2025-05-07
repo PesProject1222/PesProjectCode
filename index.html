@@ -59,6 +59,42 @@
                 </div>
             </div>
         </div>
+        <!-- Buzzer Display Section -->
+        <div class="card-grid">
+            <div class="card">
+                <div class="nextTo">
+                    <label class="switch">
+                        <input id="buzzer" type="checkbox">
+                        <span class="checkSlider"></span>
+                    </label>
+                    <span class="reading">Buzzer</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LED Display Section -->
+        <div class="card-grid">
+            <div class="circle-card">
+                <div class="nextTo">
+                    <div class="app-container">
+                        <div class="circle-container">
+                            <!-- Buttons will be added dynamically -->
+                        </div>
+
+                        <div class="color-controls">
+                            <input type="color" id="colorPicker" value="#ffffff">
+                            <input type="range" id="opacitySlider" min="0" max="1" step="0.01" value="1">
+                            <label for="opacitySlider">Opacity</label>
+                            <div class="rgb-values" id="rgbValues">RGBA: 255, 255, 255, 1</div>
+                            <button class="reset-btn" id="resetBtn">Reset All Colors</button>
+                            <button class="send-btn" id="sendBtn">Send All Colors</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      
         <!-- Motor Control Section -->
         <div class="card-grid">
             <!-- Distance Control -->
