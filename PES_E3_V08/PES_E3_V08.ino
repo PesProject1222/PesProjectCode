@@ -19,11 +19,11 @@ CRGB leds[NUM_LEDS];
 
 VL53L0X sensor1;
 VL53L0X sensor2;
-const int pinSensor1 = 32;
-const int pinSensor2 = 33;
+const int pinSensor1 = 13; //hoogte
+const int pinSensor2 = 12; //afstand
 
 MPU6050 mpu;
-const int buzzer = 15;
+const int buzzer = 14;
 
 bool lanceerReady = false;
 bool lanceer = false;
@@ -142,7 +142,7 @@ class StappenMotor{
 };
 
 StappenMotor lanceerMotor(16, 17, 5, 400);
-StappenMotor verticaalMotor(18, 19, 21, 500);
+StappenMotor verticaalMotor(18, 19, 23, 500);
 
 class MyServerCallbacks : public BLEServerCallbacks {
   void onConnect(BLEServer* pServer) {
